@@ -70,11 +70,11 @@ function openEditWindow()
 {
 	//openDialog
 	var EditWindow = window.open("", "", "width=500,height=500");
-	//EditWindow.CallParentfunction = function submitReplacement()
-	//{
-	//NeoTranslateReplacementList.json.appendFile('message.txt', document.getElementById("input").value + document.getElementById("output").value)
-	//}
-	EditWindow.document.write("<html><p><input type=\"text\" id=\"input\" value=\"\"placeholder=\"replace this text\"></p><p><input type=\"text\" id=\"output\" value=\"\"placeholder=\"with this text\"></p><button onclick=\"submitReplacement();\">Submit Replacement</button>\<scr" + "ipt> function submitReplacement(){NeoTranslateReplacementList.json.appendFile('message.txt',document.getElementById(\"input\").value + document.getElementById(\"output\").value, function (err) {if (err) throw err;console.log('Saved!');});}</scr" + "ipt></html>");
+	EditWindow.CallParentfunction = function submitReplacement()
+	{
+	NeoTranslateReplacementList.json.appendFile('message.txt', document.getElementById("input").value + document.getElementById("output").value)
+	}
+	EditWindow.document.write("<html><p><input type=\"text\" id=\"input\" value=\"\"placeholder=\"replace this text\"></p><p><input type=\"text\" id=\"output\" value=\"\"placeholder=\"with this text\"></p><button onclick=\"submitReplacement();\">Submit Replacement</button>\<scr" + "ipt> function submitReplacement(){N\"C:\Users\kevin\Downloads\NeoTranslateReplacementList.json\".appendFile('message.txt',document.getElementById(\"input\").value + document.getElementById(\"output\").value, function (err) {if (err) throw err;console.log('Saved!');});}</scr" + "ipt></html>");
 	EditWindow.document.close();
 }
 
