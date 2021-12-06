@@ -55,13 +55,13 @@ function CreateOrEdit()
 
 function checkForFile()
 {
-    if ("NeoTranslateReplacementList.txt".exists())
+    if ("NeoTranslateReplacementList.json".exists)
 	{
 		openEditWindow();
 	}
 	else
 	{
-		saveAs(new File(["//mkae replacements in the form "], "NeoTranslateReplacementList.txt", {type: "text/plain;charset=utf-8"}));
+		saveAs(new File(["//mkae replacements in the form "], "NeoTranslateReplacementList.json", {type: "text/plain;charset=utf-8"}));
 	}
 }
 
@@ -90,7 +90,7 @@ function replaceList()
 
 }
 
-function appendList()
+function appendToList()
 {
 
 }
