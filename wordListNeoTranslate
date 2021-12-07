@@ -21,8 +21,9 @@ body{
 <p>Set Speed in milliseconds<input type="number" id="speed" value="500"></p>
 </form>
 <button onclick="doFunctions();">Translate</button>
-<button onclick="CreateOrEdit();">create custom replecements</button>
-<p id="demo"></p>
+<p><input type="text" id="input" value=""placeholder="replace this text"></p>
+<p><input type="text" id="output" value=""placeholder="with this text"></p>
+<button onclick="submitNewReplacement();">Submit Custom Replacement</button>
 
 
 
@@ -33,84 +34,76 @@ body{
 
 <script>
 var stringToReplace;
+var list=[];
+var permanentList;
 function doFunctions()
 {
 	stringToReplace = " "+document.getElementById("myText").value+" ";
-	englishRreplacements();
+	applyCustomWordListTranslations()
+	chineseRubyRreplacements();
 	setDifficulty();
 	setSpeed();
-	//createUserReplacements();
-	//creatSaveFile();
-	translate();
+	flashingTranslations();
 }
-
-
-
-
-
-function CreateOrEdit()
+function submitNewReplacement()
 {
-	checkForFile();
+	list.push([document.getElementById("input").value, document.getElementById("output").value]);//this doesent append like a 2d array
+
+
+
+
+
+
+
+
+
+
+	localStorage.setItem("permanentList", list);
+
+
+
+
+
+
+
+
+
+
+
+console.log(listKey);
 }
-
-function checkForFile()
+function saveToFile()
 {
-    if ("NeoTranslateReplacementList.json".exists)
+    if (NeoTranslateReplacementList.json.exists())
 	{
-		openEditWindow();
+		//C:\Users\kevin\Downloads\NeoTranslateReplacementList.json.appendFile('message.txt',document.getElementById("input").value + document.getElementById("output").value, function (err) {if (err) throw err;console.log('Saved!');});
 	}
 	else
 	{
 		saveAs(new File(["//make replacements"], "NeoTranslateReplacementList.json", {type: "text/plain;charset=utf-8"}));
-		openEditWindow();
+		//replaacement word
+		//withWord
+		//caseSensitive?
+		//regExp?
 	}
 }
 
-function openEditWindow()
+function applyCustomWordListTranslations()
 {
-	//openDialog
-	var EditWindow = window.open("", "", "width=500,height=500");
-	EditWindow.CallParentfunction = function submitReplacement()
+	for(var j=0;j<list.length;j++)
 	{
-	NeoTranslateReplacementList.json.appendFile('message.txt', document.getElementById("input").value + document.getElementById("output").value)
+		stringToReplace=stringToReplace.replaceAll(list[j][0],list[j][1]);
 	}
-	EditWindow.document.write("<html><p><input type=\"text\" id=\"input\" value=\"\"placeholder=\"replace this text\"></p><p><input type=\"text\" id=\"output\" value=\"\"placeholder=\"with this text\"></p><button onclick=\"submitReplacement();\">Submit Replacement</button>\<scr" + "ipt> function submitReplacement(){N\"C:\Users\kevin\Downloads\NeoTranslateReplacementList.json\".appendFile('message.txt',document.getElementById(\"input\").value + document.getElementById(\"output\").value, function (err) {if (err) throw err;console.log('Saved!');});}</scr" + "ipt></html>");
-	EditWindow.document.close();
-}
-
-
-
-
-function submitRerplacement()
-{
-	NeoTranslateReplacementList.json.appendFile('message.txt', document.getElementById("input").value + document.getElementById("output").value, function (err) {
-  if (err) throw err;
-  console.log('Saved!');
-});
-}
-
-function openWriteToScreen()
-{
-	//
-}
-
-function writeToFile()
-{
-
-  //replaacement word
-	//withWord
-	//caseSensitive?
-	//regExp?
 }
 
 function replaceList()
 {
-
+	//add function to upload a new list and repace existing list
 }
 
 function appendListToList()
 {
-
+	//add function to append list file to existing list file
 }
 
 
@@ -128,14 +121,14 @@ let linePrintLag = 600; //in milliseconds
 function setDifficulty()
 {
    difficulty = parseInt(document.getElementById("myNumber").value, 10);
-  }
+}
 function setSpeed()
 {
 	linePrintLag = parseInt(document.getElementById("speed").value, 10);
-  }
+}
 
 
-function englishRreplacements()
+function chineseRubyRreplacements()
 {
 	var replacements=
 			[
@@ -2403,7 +2396,7 @@ function englishRreplacements()
 		stringToReplace=stringToReplace.replaceAll(replacements[j][0],replacements[j][1]);
 	}
 }
-async function translate()
+async function flashingTranslations()
 {
 	const nextCharacterMap=
 		{
