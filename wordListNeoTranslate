@@ -27,15 +27,25 @@ body{
 
 
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
 
 
 
 
 <script>
 var stringToReplace;
-var list=[];
-var permanentList;
+//var list=[];
+
+var list = [];
+var localStorageList=localStorage.getItem(localStorageList);
+console.log(localStorage.getItem("localStorageList"));
+
+if(localStorage.getItem('localStorageList')!==null)
+{
+list = localStorage.getItem('localStorageList');
+console.log("works");
+}
+
 function doFunctions()
 {
 	stringToReplace = " "+document.getElementById("myText").value+" ";
@@ -51,42 +61,15 @@ function submitNewReplacement()
 
 
 
+	localStorage.setItem('localStorageList', JSON.stringify(list));
 
 
 
 
 
-
-
-	localStorage.setItem("permanentList", list);
-
-
-
-
-
-
-
-
-
-
-
-console.log(listKey);
+console.log(localStorage.getItem("localStorageList"));
 }
-function saveToFile()
-{
-    if (NeoTranslateReplacementList.json.exists())
-	{
-		//C:\Users\kevin\Downloads\NeoTranslateReplacementList.json.appendFile('message.txt',document.getElementById("input").value + document.getElementById("output").value, function (err) {if (err) throw err;console.log('Saved!');});
-	}
-	else
-	{
-		saveAs(new File(["//make replacements"], "NeoTranslateReplacementList.json", {type: "text/plain;charset=utf-8"}));
-		//replaacement word
-		//withWord
-		//caseSensitive?
-		//regExp?
-	}
-}
+
 
 function applyCustomWordListTranslations()
 {
@@ -106,9 +89,26 @@ function appendListToList()
 	//add function to append list file to existing list file
 }
 
+function removeWordFromList()
+{
+	//add function to remove individual words specifyed by user
+}
 
-
-
+function saveToFile()
+{
+    if (NeoTranslateReplacementList.json.exists())
+	{
+		//C:\Users\kevin\Downloads\NeoTranslateReplacementList.json.appendFile('message.txt',document.getElementById("input").value + document.getElementById("output").value, function (err) {if (err) throw err;console.log('Saved!');});
+	}
+	else
+	{
+		saveAs(new File(["//make replacements"], "NeoTranslateReplacementList.json", {type: "text/plain;charset=utf-8"}));
+		//replaacement word
+		//withWord
+		//caseSensitive?
+		//regExp?
+	}
+}
 
 
 
