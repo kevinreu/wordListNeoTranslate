@@ -37,13 +37,21 @@ var stringToReplace;
 //var list=[];
 
 var list = [];
-var localStorageList=localStorage.getItem(localStorageList);
+var arrayList= [];
+localStorage.removeItem("localStorageList");
+var localStorageList=localStorage.getItem("localStorageList");
 console.log(localStorage.getItem("localStorageList"));
 
 if(localStorage.getItem('localStorageList')!==null)
 {
 list = localStorage.getItem('localStorageList');
-console.log("works");
+arrayList=Array.from(list);
+//JSON.parse(list);
+
+//list.split(",");
+console.log(arrayList);
+//console.log(JSON.parse(list));
+
 }
 
 function doFunctions()
@@ -57,7 +65,8 @@ function doFunctions()
 }
 function submitNewReplacement()
 {
-	list.push([document.getElementById("input").value, document.getElementById("output").value]);//this doesent append like a 2d array
+	arrayList.push([document.getElementById("input").value, document.getElementById("output").value]);
+	list.push([document.getElementById("input").value, document.getElementById("output").value]);
 
 
 
@@ -66,7 +75,8 @@ function submitNewReplacement()
 
 
 
-
+console.log(arrayList);
+console.log(list);
 console.log(localStorage.getItem("localStorageList"));
 }
 
@@ -75,7 +85,7 @@ function applyCustomWordListTranslations()
 {
 	for(var j=0;j<list.length;j++)
 	{
-		stringToReplace=stringToReplace.replaceAll(list[j][0],list[j][1]);
+		stringToReplace=stringToReplace.replaceAll(arrayList[j][0],arrayList[j][1]);
 	}
 }
 
