@@ -24,6 +24,7 @@ body{
 <p><input type="text" id="input" value=""placeholder="replace this text"></p>
 <p><input type="text" id="output" value=""placeholder="with this text"></p>
 <button onclick="submitNewReplacement();">Submit Custom Replacement</button>
+<button onclick="deleateList();">deleateList</button>
 
 
 
@@ -34,26 +35,19 @@ body{
 
 <script>
 var stringToReplace;
-//var list=[];
-
 var list = [];
-var arrayList= [];
-localStorage.removeItem("localStorageList");
+
 var localStorageList=localStorage.getItem("localStorageList");
-console.log(localStorage.getItem("localStorageList"));
+console.log("localStorageList="+localStorage.getItem("localStorageList"));
 
 if(localStorage.getItem('localStorageList')!==null)
 {
 list = localStorage.getItem('localStorageList');
-arrayList=Array.from(list);
+console.log("list1="+ list);
 //JSON.parse(list);
-
 //list.split(",");
-console.log(arrayList);
 //console.log(JSON.parse(list));
-
 }
-
 function doFunctions()
 {
 	stringToReplace = " "+document.getElementById("myText").value+" ";
@@ -65,27 +59,21 @@ function doFunctions()
 }
 function submitNewReplacement()
 {
-	arrayList.push([document.getElementById("input").value, document.getElementById("output").value]);
+	console.log(list);
 	list.push([document.getElementById("input").value, document.getElementById("output").value]);
-
-
-
-	localStorage.setItem('localStorageList', JSON.stringify(list));
-
-
-
-
-console.log(arrayList);
-console.log(list);
-console.log(localStorage.getItem("localStorageList"));
+	localStorage.setItem('localStorageList', list);
+	//localStorageList=Array.from();
+	console.log("localStorageList="+localStorage.getItem("localStorageList"));
 }
+
+
 
 
 function applyCustomWordListTranslations()
 {
 	for(var j=0;j<list.length;j++)
 	{
-		stringToReplace=stringToReplace.replaceAll(arrayList[j][0],arrayList[j][1]);
+		stringToReplace=stringToReplace.replaceAll(list[j][0],list[j][1]);
 	}
 }
 
@@ -118,6 +106,22 @@ function saveToFile()
 		//caseSensitive?
 		//regExp?
 	}
+}
+
+function deleateList()
+{
+	localStorage.removeItem("localStorageList");
+}
+
+function download_txt()
+{
+  var textToSave = document.getElementById('txt').innerHTML;
+  var hiddenElement = document.createElement('a');
+
+  hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'myFile.txt';
+  hiddenElement.click();
 }
 
 
