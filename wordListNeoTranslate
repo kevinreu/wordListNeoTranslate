@@ -15,6 +15,9 @@ body{
 </style>
 </head>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+
+
 <p>Paste English text here <input type="text" id="myText" value=""placeholder="Your Text Here"></p>
 <form >
 <p>Set Difficulty <input type="number" id="myNumber" value="2"></p>
@@ -25,35 +28,28 @@ body{
 <p><input type="text" id="output" value=""placeholder="with this text"></p>
 <p><button onclick="submitNewReplacement();">Submit Custom Replacement</button></p>
 <p><button onclick="saveToFile();">Save/Exprt Custom Translations</button></p>
-<form id="myformAppend">
-    <input id="myfile" name="files[]" multiple="" type="file" />
-    <textarea id="text" rows="20" cols="40">click [Choose Files] to load a file</textarea>
-</form>
-<form id="myform">
-    <input id="myfile" name="files[]" multiple="" type="file" />
-    <textarea id="text" rows="20" cols="40">click [Choose Files] to load a file</textarea>
-</form>
 <p><button onclick="deleateList();">deleateList</button></p>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
-<script type="module" src="appthatimports.js"></script>
+<form action="#" onsubmit="uploadFile()">
+    <input type="file" id="file" />
+    <input type="submit" />
+</form>
 
 
 
 <script>
 var stringToReplace;
 var list = [];
-var listTest=[];
+let replacementList=[];
 var localStorageList=localStorage.getItem(["localStorageList"]);
 localStorageList=Array.from('localStorageList');
 console.log("localStorageList="+localStorage.getItem(["localStorageList"]));
 
 if(localStorage.getItem('localStorageList')!==null)
 {
-list = localStorage.getItem('localStorageList');
+list = localStorage.getItem(['localStorageList']);
 console.log("list1="+ list);
-//JSON.parse(list);
+replacementList = list.split(",");
+console.log(replacementList);
 //list.split(",");
 //console.log(JSON.parse(list));
 }
@@ -68,67 +64,41 @@ function doFunctions()
 }
 function submitNewReplacement()
 {
-	console.log(list);
-	list.push([document.getElementById("input").value, document.getElementById("output").value]);
-	localStorage.setItem('localStorageList', list);
+
+	replacementList.push(document.getElementById("input").value, document.getElementById("output").value);
+	console.log(replacementList);
+	localStorage.setItem('localStorageList', [replacementList]);
 	//localStorageList=Array.from();
 	console.log("localStorageList="+localStorage.getItem("localStorageList"));
 }
 
 
 
+function uploadFile() {
+  const [file] = document.querySelector('input[type=file]').files;
+  const reader = new FileReader();
+  reader.addEventListener("load", () =>
+	{
+		replacementList = [reader.result];
+		console.log(replacementList);
+  }, false);
+
+  if (file) {
+    reader.readAsText(file);
+  }
+}
+
+console.log(replacementList);
 
 function applyCustomWordListTranslations()
 {
-	for(var j=0;j<list.length;j++)
+	for(var j=0;j<replacementList.length;j+=2)
 	{
-		stringToReplace=stringToReplace.replaceAll(list[j][0],list[j][1]);
+		stringToReplace=stringToReplace.replaceAll(replacementList[j],replacementList[j+1]);//j must be iterated by 2
 	}
 }
 
-document.forms['myform'].elements['myfile'].onchange = function(evt) {
-    if(!window.FileReader) return; // Browser is not compatible
 
-    var reader = new FileReader();
-
-    reader.onload = function(evt)
-		{
-        if(evt.target.readyState != 2) return;
-        if(evt.target.error)
-				{
-            alert('Error while reading file');
-            return;
-        }
-        filecontent = evt.target.result;
-				list=evt.target.result;
-				//list.push([evt.target.result]);//copy this function and use this insted of list=evt.target.result;
-        document.forms['myform'].elements['text'].value = evt.target.result;
-    };
-
-    reader.readAsText(evt.target.files[0]);
-};
-
-
-document.forms['myformAppend'].elements['myfile'].onchange = function(evt) {
-    if(!window.FileReader) return; // Browser is not compatible
-
-    var reader = new FileReader();
-
-    reader.onload = function(evt)
-		{
-        if(evt.target.readyState != 2) return;
-        if(evt.target.error)
-				{
-            alert('Error while reading file');
-            return;
-        }
-        filecontent = evt.target.result;
-				list.push([evt.target.result]);
-        document.forms['myform'].elements['text'].value = evt.target.result;
-    };
-
-    reader.readAsText(evt.target.files[0]);
-};
 function appendListToList()
 {
 	//add function to append list file to existing list file
@@ -141,7 +111,7 @@ function removeWordFromList()
 
 function saveToFile()
 {
-	saveAs(new File([list], "NeoTranslateReplacementList.json", {type: "text/plain;charset=utf-8"}));
+	saveAs(new File([list], "NeoTranslateReplacementList.txt", {type: "text/plain;charset=utf-8"}));
 		// export let listExport =list;
 	//replaacement word
 	//withWord
