@@ -79,6 +79,9 @@ function uploadFile() {
   reader.addEventListener("load", () =>
 	{
 		replacementList = [reader.result];
+		localStorage.setItem('localStorageList', [replacementList]);
+		console.log("load event fired");
+		console.log("render result is",reader.result);
 		console.log(replacementList);
   }, false);
 
