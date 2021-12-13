@@ -29,7 +29,7 @@ body{
 <p><button onclick="submitNewReplacement();">Submit Custom Replacement</button></p>
 <p><button onclick="saveToFile();">Save/Exprt Custom Translations</button></p>
 <p><button onclick="deleateList();">deleateList</button></p>
-<form action="#" onsubmit="uploadFile()">
+upload file<form action="#" onsubmit="uploadFile()">
     <input type="file" id="file" />
     <input type="submit" />
 </form>
@@ -68,7 +68,6 @@ function submitNewReplacement()
 	replacementList.push(document.getElementById("input").value, document.getElementById("output").value);
 	console.log(replacementList);
 	localStorage.setItem('localStorageList', [replacementList]);
-	//localStorageList=Array.from();
 	console.log("localStorageList="+localStorage.getItem("localStorageList"));
 }
 
@@ -111,7 +110,7 @@ function removeWordFromList()
 
 function saveToFile()
 {
-	saveAs(new File([list], "NeoTranslateReplacementList.txt", {type: "text/plain;charset=utf-8"}));
+	saveAs(new File([replacementList], "NeoTranslateReplacementList.txt", {type: "text/plain;charset=utf-8"}));
 		// export let listExport =list;
 	//replaacement word
 	//withWord
